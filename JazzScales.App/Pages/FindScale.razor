@@ -1,0 +1,82 @@
+﻿@page "/findscale"
+@using JazzScales.App.ViewModels
+@using System.Linq
+
+@inject FindScaleViewModel _vm
+
+<h3>Find Scale</h3>
+<div class="">
+    <div class="row g-1 mt-1">
+        <div class="col-3">
+            <span class="input-group-text">Chord:</span>
+        </div>
+        <div class="col-2">
+            <select @bind="_vm.SelectedRoot" class="form-control">
+                @foreach (var item in _vm.AllNotes)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <select @bind="_vm.SelectedAlteration" class="form-control">
+                @foreach (var item in _vm.AllAlterations)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <select @bind="_vm.SelectedChord" class="form-control">
+                <option></option>
+                @foreach (var chord in _vm.AllChords)
+                {
+                    <option value="@chord.Kind">@_vm.FormatChord(chord)</option>
+                }
+            </select>
+        </div>
+
+    </div>
+    <div class="row g-1 mt-1">
+        <div class="col-5">
+            <span class="input-group-text">Instrument key:</span>
+        </div>
+        <div class="col-2">
+            <select @bind="_vm.TransposingRoot" class="form-control">
+                @foreach (var item in _vm.AllNotes)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <select @bind="_vm.TransposingAlteration" class="form-control">
+                @foreach (var item in _vm.SingleAlterations)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col"></div>
+    </div>
+    <div class="row g-1 mt-1">
+        <div class="col-5">
+            <span class="input-group-text">Enharmonic:</span>
+        </div>
+        <div class="col form-check form-switch m-2">
+            <input type="checkbox" @bind="_vm.Enharmonic" id="enharmonic" class="form-check-input p-2" />
+        </div>
+    </div>
+</div>
+<div class="pt-3">
+    @if (_vm.Scales.Any())
+    {
+        <h4>Scales:</h4>
+        <ul class="list-group">
+            @foreach (var scale in _vm.Scales)
+            {
+                <li class="list-group-item">@scale.ToString()</li>
+            }
+        </ul>
+    }
+</div>

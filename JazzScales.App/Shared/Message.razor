@@ -1,0 +1,31 @@
+﻿@using JazzScales.App.ViewModels
+
+@inject MessageViewModel _vm
+
+@if (!String.IsNullOrEmpty(_vm.MessageText))
+{
+    <div id="message" class="alert alert-@_vm.MessageType.ToString().ToLower() alert-dismissible fade show" role="alert">
+        @_vm.MessageText
+        <a class="btn-close" data-dismiss="alert" aria-label="Close" @onclick="_vm.HideMessage"></a>
+    </div>
+}
+
+@code
+{
+    protected override Task OnInitializedAsync()
+    {
+        _vm.StateChanged += ViewModelPropertyChanged;
+
+        return base.OnInitializedAsync();
+    }
+
+    private void ViewModelPropertyChanged(object sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _vm.StateChanged -= ViewModelPropertyChanged;
+    }
+}

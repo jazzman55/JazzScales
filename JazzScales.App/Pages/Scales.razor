@@ -1,0 +1,43 @@
+﻿@page "/scales"
+@using JazzScales.App.ViewModels
+
+@inject ScalesViewModel _vm
+
+<h3>Scales</h3>
+<div class="">
+    <div class="row g-1 mt-1">
+        <div class="col-2">
+            <select @bind="_vm.SelectedRoot" class="form-control">
+                @foreach (var item in _vm.AllNotes)
+                {
+                    <option value="@item" class="dropdown-item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col-2">
+            <select @bind="_vm.SelectedAlteration" class="form-control">
+                @foreach (var item in _vm.AllAlterations)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <select @bind="_vm.SelectedScale" class="form-control">
+                <option></option>
+                @foreach (var item in _vm.AllScales)
+                {
+                    <option value="@item.Name">@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="row g-1 mt-1">
+        <div class="col form-check form-switch m-2">
+            <input type="checkbox" @bind="_vm.Enharmonic" id="enharmonic" class="form-check-input p-2" /><label for="enharmonic">Enharmonic</label>
+        </div>
+    </div>
+</div>
+<div class="pt-3">
+    @_vm.GetScale()
+</div>
